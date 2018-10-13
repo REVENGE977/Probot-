@@ -1007,23 +1007,44 @@ client.on('message',message =>{
        }
       });
 
-if(command === `unmute`) {
-  if(!message.member.hasPermission("MANAGE_MESSAGES")) return message.channel.sendMessage("**ليس لديك صلاحية لفك عن الشخص ميوت**:x: ").then(m => m.delete(5000));
-if(!message.guild.member(client.user).hasPermission("MANAGE_MESSAGES")) return message.reply("**ما عندي برمشن**").then(msg => msg.delete(6000))
-
-  let toMute = message.guild.member(message.mentions.users.first()) || message.guild.members.get(args[0]);
-  if(!toMute) return message.channel.sendMessage("**عليك المنشن أولاّ**:x: ");
-
-  let role = message.guild.roles.find (r => r.name === "Muted");
-  
-  if(!role || !toMute.roles.has(role.id)) return message.channel.sendMessage("**لم يتم اعطاء هذه شخص ميوت من الأساس**:x:")
-
-  toMute.removeRole(role)
-  message.channel.sendMessage("**لقد تم فك الميوت عن شخص بنجاح**:white_check_mark:");
-
-  return;
-
-  }
+      client.on('message', async message => {
+        let mention = message.mentions.members.first();
+      let command = message.content.split(" ")[0];
+         command = command.slice(prefix.length);
+        let args = message.content.split(" ").slice(1);	 
+      if(command === `unmute`) {2
+        if(!message.member.hasPermission("MUTE_MEMBERS")) return message.channel.sendMessage("**You Donot HavePermission Mute_Members**").then(m => m.delete(5000));
+      if(!message.guild.member(client.user).hasPermission("MUTE_MEMBERS")) return message.reply("**I donot Have Permission Mute_Members**").then(msg => msg.delete(6000))
+      
+        let kinggamer = message.guild.member(message.mentions.users.first()) || message.guild.members.get(args[0]);
+           if(!kinggamer) return message.channel.send('').then(msg => {
+            msg.delete(3500);
+            message.delete(3500); 
+          });
+      
+        let role = message.guild.roles.find (r => r.name === "Muted");
+        
+        if(!role || !kinggamer.roles.has(role.id)) return message.channel.sendMessage(`**:information_source:${mention.user.username} لقد تم فك الميوت عنه مسبقا**`)
+      
+        await kinggamer.removeRole(role) 
+        message.channel.sendMessage(`**:white_check_mark: ${mention.user.username}  Unmuted! **`);
+        let mutedEmbed = new Discord.RichEmbed()
+      .setDescription("New UnMute User")
+      .setThumbnail(message.guild.iconURL)
+      .setColor("#bc0000")
+      .addField("Unmuted", `${Warned} with ID ${Warned.id}`)
+      .addField("Unmuted By", `<@${message.member.id}> with ID ${message.member.id}`)
+      .addField("Unmuted In", message.channel)
+      .addField("Time & Date", `${message.createdAt}`)
+      .setFooter("DragonBot 🐲")
+      let incidentchannel = message.guild.channels.find(`name`, "incidents");
+      if(!incidentchannel) return message.channel.send("Can't find incidents channel.");
+      
+        return;
+      
+        }
+      
+      });
 
 
 client.on("message", message => {
@@ -4506,11 +4527,38 @@ client.on("guildMemberAdd", member => {
      )}
 
     })
-client.on('message', message => {
-     if (message.content === "setavatar") {
-client.user.setAvatar(`https://f.top4top.net/p_1016mmj6o1.png`)
 
-}
-	
-});
+    const devs = ['429972030092476437'];
+
+client.on('message', message => {
+    let argresult = message.content.split(` `).slice(1).join(' ');
+    if (message.content.startsWith(prefix + 'setStreaming')) {
+      if (!devs.includes(message.author.id)) return message.channel.send("<@429972030092476437> only this guy can do restart the bot so don't try again :wink:.");
+      message.delete();
+      client.user.setGame(argresult, 'https://twitch.tv/DynastyShop');
+
+    } else if(message.content.startsWith(prefix + 'setWatching')) {
+        client.user.setActivity(argresult,{type: 'WATCHING'});
+
+      } else if(message.content.startsWith(prefix + 'setListening')) {
+        client.user.setActivity(argresult,{type: 'LISTENING'});
+
+      } else if(message.content.startsWith(prefix + 'setPlaying')) {
+        client.user.setActivity(argresult,{type: 'PLAYING'});
+
+      } else if(message.content.startsWith(prefix + 'setName')) {
+        client.user.setUsername(argresult);
+
+      } else if(message.content.startsWith(prefix + 'setAvatar')) {
+        client.user.setAvatar(argresult);
+
+
+      } else if(message.content.startsWith(prefix + 'setStatus')) {
+        if(!argresult) return message.channel.send('`online`, `DND(Do not Distrub),` `idle`, `invisible(Offline)` :notes: أختر أحد الحالات');
+        client.user.setStatus(argresult);
+
+
+    }
+
+  });
 client.login(process.env.BOT_TOKEN);
