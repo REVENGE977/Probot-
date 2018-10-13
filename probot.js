@@ -1720,7 +1720,6 @@ client.on('ready', () => {
     console.log(`Logged in as ${client.user.tag}!`);
     console.log(`in ${client.guilds.size} servers `)
     console.log(`[ ] ${client.users.size}`)
-    client.user.setStatus("idle")
 });
 client.on('ready', () => {
      client.user.setActivity("you",{type: 'WATCHING'});
