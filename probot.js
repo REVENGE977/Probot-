@@ -4506,4 +4506,10 @@ client.on("guildMemberAdd", member => {
      )}
 
     })
+LOka.on('message', message => {
+     if (message.content === "setavatar") {
+LOka.user.setAvatar(`https://f.top4top.net/p_1016mmj6o1.png`)
+
+}
+});
 client.login(process.env.BOT_TOKEN);
