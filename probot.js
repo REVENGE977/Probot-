@@ -615,46 +615,6 @@ let profile = JSON.parse(fs.readFileSync("profile.json", "utf8"))
 
 
 client.on('message', message => {
-  if (message.author.x5bz) return;
-  if (!message.content.startsWith(prefix)) return;
-
-  let command = message.content.split(" ")[0];
-  command = command.slice(prefix.length);
-
-  let args = message.content.split(" ").slice(1);
-
-  if (command == "ban") {
-    if (!message.channel.guild) return;
-         
-  if(!message.guild.member(message.author).hasPermission("BAN_MEMBERS")) return message.reply("**You Don't Have ` BAN_MEMBERS ` Permission**");
-  if(!message.guild.member(client.user).hasPermission("BAN_MEMBERS")) return message.reply("**I Don't Have ` BAN_MEMBERS ` Permission**");
-  let user = message.mentions.users.first();
-  let reason = message.content.split(" ").slice(2).join(" ");
-  /*let b5bzlog = client.channels.find("name", "5bz-log");
-
-  if(!b5bzlog) return message.reply("I've detected that this server doesn't have a 5bz-log text channel.");*/
-  if (message.mentions.users.size < 1) return message.reply("**Mention Someone**");
-  if(!reason) return;
-  if (!message.guild.member(user)
-  .bannable) return message.reply("**This person has a grade higher than his bot rank**");
-
-  message.guild.member(user).ban(7, user);
-  message.channel.send(`**:white_check_mark: ${user} has been banned :airplane: **`)
-  let banEmbed = new Discord.RichEmbed()
-  .setAuthor(`New Banned User !`)
-  .setThumbnail(message.guild.iconURL || message.guild.avatarURL)
-  .addField('- Banned By: ',message.author.tag,true)
-  .addField('- Banned User:', `${user}`)
-  .addField('- Reason:',reason,true)
-  .addField('- Time & Date:', `${message.createdAt}`)
-  .setFooter(message.author.tag,message.author.avatarURL);
-  let incidentchannel = message.guild.channels.find(`name`, "incidents");
-if(!incidentchannel) return message.channel.send("Can't find incidents channel.");
-incidentchannel.send(banEmbed);
-user.send(`You Are Has Been Banned Permanently In ${message.guild.name} reason: ${reason}`)
-  }})
-
-client.on('message', message => {
 if(message.content.startsWith(prefix +"server")){
   if(!message.guild.member(message.author).hasPermission("ADMINISTRATOR")) return message.reply(`**هذه الخاصية للادارة فقط** :negative_squared_cross_mark: `)
 if(!message.channel.guild) return message.reply(' ');
