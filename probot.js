@@ -7,9 +7,9 @@ const Canvas = require("canvas");
 const jimp = require('jimp')
 const prefix = "#"
 const data = JSON.parse(fs.readFileSync('./data.json', 'utf8'));
-
 client.on("message", message => {
     if (message.author.bot || !message.guild) return; 
+
     let score;
     
     if (message.guild) {
