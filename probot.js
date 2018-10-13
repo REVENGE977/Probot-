@@ -1018,7 +1018,7 @@ if(!message.guild.member(client.user).hasPermission("MANAGE_MESSAGES")) return m
   
   if(!role || !toMute.roles.has(role.id)) return message.channel.sendMessage("**لم يتم اعطاء هذه شخص ميوت من الأساس**:x:")
 
-  await toMute.removeRole(role)
+  toMute.removeRole(role)
   message.channel.sendMessage("**لقد تم فك الميوت عن شخص بنجاح**:white_check_mark:");
 
   return;
