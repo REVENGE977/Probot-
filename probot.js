@@ -25,10 +25,10 @@ client.on('message', message => {
     let role = new Discord.RichEmbed()
   .setDescription(`
   امثله على اعطاء رتبه : 
-  d!role @mention rolename : لأعطاء رتبة لعضو معين
-  d!role all rolename : لأعطاء رتبة للجميع 
-  d!role humans rolename : لأعطاء رتبة للاشخاص فقط
-  d!role bots rolename : لأعطاء رتبة لجميع البوتات
+  #role @mention rolename : لأعطاء رتبة لعضو معين
+  #role all rolename : لأعطاء رتبة للجميع 
+  #role humans rolename : لأعطاء رتبة للاشخاص فقط
+  #role bots rolename : لأعطاء رتبة لجميع البوتات
   امثله على سحب رتبه
   #-role @mention rolename : لسحب رتبة لعضو معين
   #-role all rolename : لسحب رتبة للجميع 
@@ -1157,7 +1157,6 @@ omar.reply("`تم حذف جميع الرتب بنجاح`")
 client.on('message', message => {
   if (message.author.bot) return;
    if (message.content === prefix + "help") {
-    if(!message.member.hasPermission('ADMINISTRATOR')) return      message.channel.send('**للأسف لا تمتلك صلاحية** `ADMINISTRATOR`' );
 
 
 
