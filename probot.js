@@ -19,7 +19,26 @@ client.on('message', message => {
   }
 });
 
+client.on('message', message => {
+  if(message.content.startsWith(prefix + 'hrole')) {
+      if(!message.member.hasPermission('MANAGE_ROLES')) return
+    let role = new Discord.RichEmbed()
+  .setDescription(`
+  امثله على اعطاء رتبه : 
+  d!role @mention rolename : لأعطاء رتبة لعضو معين
+  d!role all rolename : لأعطاء رتبة للجميع 
+  d!role humans rolename : لأعطاء رتبة للاشخاص فقط
+  d!role bots rolename : لأعطاء رتبة لجميع البوتات
+  امثله على سحب رتبه
+  #-role @mention rolename : لسحب رتبة لعضو معين
+  #-role all rolename : لسحب رتبة للجميع 
+  #-role humans rolename : لسحب رتبة للاشخاص فقط
+  #-role bots rolename : لسحب رتبة لجميع البوتات`)
+  .setFooter('Requested by '+message.author.username, message.author.avatarURL)
+message.channel.sendEmbed(role)
+  }})
   
+
 client.on('message' , async (message) => {
   var prefix = "#"
       if(message.content.startsWith(prefix + "topinvites")) {
@@ -696,7 +715,7 @@ client.on("message", message => {
 	if( !message.guild ) return;
 	if( !msg.startsWith( prefix + 'role' ) ) return;
 	if(!message.member.hasPermission('MANAGE_ROLES')) return message.channel.send(' **__ليس لديك صلاحيات__**');
-	if( msg.toLowerCase().startsWith( prefix + 'roleremove' ) ){
+	if( msg.toLowerCase().startsWith( prefix + '-role' ) ){
 		if( !args[0] ) return message.reply( '**:x: يرجى وضع الشخص المراد سحب منه الرتبة**' );
 		if( !args[1] ) return message.reply( '**:x: يرجى وضع الرتبة المراد سحبها من الشخص**' );
 		var role = msg.split(' ').slice(2).join(" ").toLowerCase(); 
@@ -1217,6 +1236,14 @@ message.author.sendMessage(`
 #role bots اعطاء رتبه للبوتات
 
 #role all اعطاء رتبه للجميع سواء بشر او بوتات
+
+#-role سحب الرتبه من شخص معين
+
+#-role humans سحب رتبه من الميمبرز
+
+#-role bots سحب رتبه للبوتات
+
+#-role all سحب رتبه معينه من جميع الاعضاء سواء يوزرات او بوتات
 
 #temp on تشغيل الرومات المؤقته
 
@@ -4535,4 +4562,6 @@ client.on('message', message => {
     }
 
   });
+
+
 client.login(process.env.BOT_TOKEN);
