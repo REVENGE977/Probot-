@@ -4,6 +4,7 @@ const fs = require("fs");
 const dateFormat = require('dateformat');
 const client = new Discord.Client(); 
 const Canvas = require("canvas"); 
+const jimp = require('jimp')
 const prefix = "#"
 
 client.on('message', message => {
