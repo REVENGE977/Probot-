@@ -758,9 +758,9 @@ client.on('ready', () => {
   console.log(`|  Users Size ${client.users.size}  |`);
   console.log(`| Guilds Size ${client.guilds.size} |`);
   console.log(`|===================================|`);
-  console.log(`| Created By @$~¤Super_Man¤~$#9700  |`);
+  console.log(`| Created By <@429972030092476437> |`);
   console.log(`|===================================|`);
-  console.log(`|        Over Bot Log By You !      |`);
+  console.log(`|        Probot Log By You !      |`);
   console.log(`|===================================|`);
 });
 client.on('message', msg => {
@@ -1138,7 +1138,7 @@ client.on('message', message => {
         if(!message.channel.guild) return;
     let embed = new Discord.RichEmbed()
     .setAuthor(` ${message.author.username} `, message.author.avatarURL)      
-    .setTitle(`Click Here To Add OverBot `)
+    .setTitle(`Click Here To Add Probot `)
     .setURL(`https://discordapp.com/api/oauth2/authorize?client_id=498924229383946260&permissions=8&scope=bot`)
     .setThumbnail(" https://cdn.discordapp.com/avatars/377904849783750667/6c76e412f18c142dfd711d05fb363869.png?size=2048")        
  message.channel.sendEmbed(embed);
@@ -1146,85 +1146,107 @@ client.on('message', message => {
 });
 
 client.on('message', message => {
-    if (message.author.bot) return;
-     if (message.content === prefix + "help") {
-      if(!message.member.hasPermission('ADMINISTRATOR')) return      message.channel.send('**للأسف لا تمتلك صلاحية** `ADMINISTRATOR`' );
-     message.channel.send('**تم ارسال رسالة في الخاص**');
+  if (message.author.bot) return;
+   if (message.content === prefix + "help") {
+    if(!message.member.hasPermission('ADMINISTRATOR')) return      message.channel.send('**للأسف لا تمتلك صلاحية** `ADMINISTRATOR`' );
+   message.channel.send('**تم ارسال رسالة في الخاص**');
 
 
 
 
- message.author.sendMessage(`
- **
- [❖═════ لتشغيل اللوق Log يجب وجود روم باسم ═══════❖]
+message.author.sendMessage(`
+**
+[❖═════ لتشغيل اللوق Log يجب وجود روم باسم ═══════❖]
+
+[❖═════════════════════════════❖]
+        لماذا بروبوت ؟
+1- :rocket: سرعه اتصال ممتازه
+2- :beginner: سهل الاستخدام
+3- :warning: صيانه يوميه
+4- :money_with_wings: مجاني بالكامل
+5- :shield: يحتوي على مانع اختراق سيرفرات للحفاظ على امان سيرفرك
+6- :musical_note: يحتوي على خاصيه ميوزك بجوده عاليه
+[❖═════════════════════════════❖]
 
 [❖═════ General Commands ═══════❖]
 
- #id معلومات عن حسابك الشخصي
+#id معلومات عن حسابك الشخصي
 
- #server معلومات حول السيرفر
- 
- #move سحب عضو الى رومك الصوتي
+#server معلومات حول السيرفر
 
- #clear مسح الرسائل الموجوده في الروم بعدد
+#move سحب عضو الى رومك الصوتي
 
- #avatar يعرض اك صورتك الشخصية
- 
- #image يعرض لك صورة السيرفر
- 
- #credit يوريك كم الكريديت حقتك
+#clear مسح الرسائل الموجوده في الروم بعدد
 
- #daily يسوي لك سحب فلوس
+#avatar يعرض اك صورتك الشخصية
 
- #rep يعطي ريب
+#image يعرض لك صورة السيرفر
 
- #profile معلومات عامة مع الصورة
- 
+#credit يوريك كم الكريديت حقتك
+
+#daily يسوي لك سحب فلوس
+
+#rep يعطي ريب
+
+#profile معلومات عامة مع الصورة
+
 [❖═════ Administrator Commands ═══════❖]
 
- #ban حضر عضو من السيرفر
+#ban حضر عضو من السيرفر
 
- #setwelcomer لتحديد روم الويلكم
+#setwelcomer لتحديد روم الويلكم
 
- #autorole لتشغيل الاوتو رول وتحديد الرتبه
- 
- #kick طرد عضو من السيرفر
- 
- #mute اعضاء ميوت كتابي لعضو في السيرفر
- 
- #unmute فك الميوت عن عضو في السيرفر
+#autorole لتشغيل الاوتو رول وتحديد الرتبه
 
- #warn لتحذير شخص
- 
- #dac حذف جميع رومات السيرفر
- 
- #dar حذف جميع رتب السيرفر
- 
- #openroom فتح المحادثة في الروم
- 
- #closeroom قفل المحادثة في الروم
+#kick طرد عضو من السيرفر
 
- #role اعطاء رتبه لشخض معين
- 
- #role humans اعطاء رتب للبشريين
- 
- #role bots اعطاء رتبه للبوتات
- 
- #role all اعطاء رتبه للجميع سواء بشر او بوتات
- 
- #temp on تشغيل الرومات المؤقته
- 
- #temp off اطفاء الرومات المؤقته
+#mute اعضاء ميوت كتابي لعضو في السيرفر
+
+#unmute فك الميوت عن عضو في السيرفر
+
+#warn لتحذير شخص
+
+#dac حذف جميع رومات السيرفر
+
+#dar حذف جميع رتب السيرفر
+
+#openroom فتح المحادثة في الروم
+
+#closeroom قفل المحادثة في الروم
+
+#role اعطاء رتبه لشخض معين
+
+#role humans اعطاء رتب للبشريين
+
+#role bots اعطاء رتبه للبوتات
+
+#role all اعطاء رتبه للجميع سواء بشر او بوتات
+
+#temp on تشغيل الرومات المؤقته
+
+#temp off اطفاء الرومات المؤقته
+
+[❖═════ Music Commands ═══════❖]
+
+#play لتشغيل ميوزك
+
+#stop لايقاف الميوزك
+
+#skip لتخطي الميوزك
+
+#queue لعرض قائمه الانتظار
+
+#vol لرفع صوت
 
 [❖═════ Other ═══════❖]
 
- #support رابط سيرفر الدعم الفني
- 
- #invite رابط اضافة البوت
+#support رابط سيرفر الدعم الفني
 
- **`);
+#invite رابط اضافة البوت
 
-    }
+**`);
+
+  }
 });
 client.on('message',  async  message  =>  {
   let  user  =  message.mentions.users.first();
@@ -1241,7 +1263,7 @@ if(message.content.startsWith(prefix  +  'warn'))  {
 .addField('**-  Reason:**',  `[${reason}]`,  true)
 .addField("**-  Warned  in:**",`[${message.channel.name}]`)
 .addField("**-  Time & Date:**",`[${message.createdAt}]`)
-.setFooter("Plexbot")
+.setFooter("Probot")
 .setColor('#060c37')
 message.guild.channels.find('name',  'incidents').sendEmbed(reportembed)
 message.reply(`**:warning: ${user} has been warned !:warning:**`).then(msg  =>  msg.delete(3000));
@@ -1356,7 +1378,7 @@ client.on('message', message => {
     .setColor("#707070")
     .addField(': دخولك لديسكورد قبل', `${moment(heg.createdTimestamp).format('YYYY/M/D HH:mm:ss')} **\n** \`${moment(heg.createdTimestamp).fromNow()}\`` ,true) 
     .addField(': انضمامك لسيرفر قبل', `${moment(h.joinedAt).format('YYYY/M/D HH:mm:ss')} \n \`${moment(h.joinedAt).fromNow()}\``, true)               
-    .setFooter(`OverBot`, 'https://images-ext-2.discordapp.net/external/JpyzxW2wMRG2874gSTdNTpC_q9AHl8x8V4SMmtRtlVk/https/orcid.org/sites/default/files/files/ID_symbol_B-W_128x128.gif')                                 
+    .setFooter(`Probot`, 'https://images-ext-2.discordapp.net/external/JpyzxW2wMRG2874gSTdNTpC_q9AHl8x8V4SMmtRtlVk/https/orcid.org/sites/default/files/files/ID_symbol_B-W_128x128.gif')                                 
     .setThumbnail(heg.avatarURL);
     message.channel.send(id)
 }       });
