@@ -1139,13 +1139,19 @@ client.on('message', message => {
   if (message.author.bot) return;
    if (message.content === prefix + "help") {
     if(!message.member.hasPermission('ADMINISTRATOR')) return      message.channel.send('**للأسف لا تمتلك صلاحية** `ADMINISTRATOR`' );
-   message.channel.send('**تم ارسال رسالة في الخاص**');
 
 
 
 
 message.author.sendMessage(`
 **
+╭━━━╮╱╱╱╱╭━━╮╱╱╱╭╮
+┃╭━╮┃╱╱╱╱┃╭╮┃╱╱╭╯╰╮
+┃╰━╯┣━┳━━┫╰╯╰┳━┻╮╭╯
+┃╭━━┫╭┫╭╮┃╭━╮┃╭╮┃┃
+┃┃╱╱┃┃┃╰╯┃╰━╯┃╰╯┃╰╮
+╰╯╱╱╰╯╰━━┻━━━┻━━┻━╯
+
 [❖═════ لتشغيل اللوق Log يجب وجود روم باسم ═══════❖]
 
 [❖═════════════════════════════❖]
@@ -1158,7 +1164,7 @@ message.author.sendMessage(`
 6- :musical_note: يحتوي على خاصيه ميوزك بجوده عاليه
 [❖═════════════════════════════❖]
 
-[❖═════ General Commands ═══════❖]
+الاوامر العامة
 
 #id معلومات عن حسابك الشخصي
 
@@ -1180,7 +1186,7 @@ message.author.sendMessage(`
 
 #profile معلومات عامة مع الصورة
 
-[❖═════ Administrator Commands ═══════❖]
+أوامر ادارة السيرفرات 
 
 #ban حضر عضو من السيرفر
 
@@ -1216,7 +1222,7 @@ message.author.sendMessage(`
 
 #temp off اطفاء الرومات المؤقته
 
-[❖═════ Music Commands ═══════❖]
+اوامر الميوزك
 
 #play لتشغيل ميوزك
 
@@ -1228,11 +1234,13 @@ message.author.sendMessage(`
 
 #vol لرفع صوت
 
-[❖═════ Other ═══════❖]
+اخرى 
 
 #support رابط سيرفر الدعم الفني
 
 #invite رابط اضافة البوت
+
+#ping لمعرفه سرعه اتصال البوت
 
 **`);
 
