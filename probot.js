@@ -7,7 +7,16 @@ const Canvas = require("canvas");
 const jimp = require('jimp')
 const prefix = "#"
 const data = JSON.parse(fs.readFileSync('./data.json', 'utf8'));
-
+client.on('message',async message => {
+    if(message.content === '#allunban') {
+        if( !message.member.hasPermission( 'ADMINISTRATOR' ) ) return message.reply(' لا تملك الصلاحيات لفعل هذا الأمر');
+    message.guild.fetchBans().then(ba => {
+    ba.forEach(ns => {
+    message.guild.unban(ns);
+    });
+    });
+    }
+    });
 let banse = new Set();
 client.on('guildBanAdd', function(guild) {
   guild.fetchAuditLogs().then(logs => {
@@ -1222,6 +1231,10 @@ message.author.sendMessage(`
 أوامر ادارة السيرفرات 
 
 #ban حضر عضو من السيرفر
+
+#unban لفك الحضر عن عضو من السيرفر
+
+#allunban لفك الحضر عن جميع الاعضاء في السيرفر
 
 #setwelcomer لتحديد روم الويلكم
 
