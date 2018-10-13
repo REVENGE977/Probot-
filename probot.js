@@ -590,102 +590,50 @@ client.on('voiceStateUpdate', (voiceOld, voiceNew) => {
 	}
 });
 let profile = JSON.parse(fs.readFileSync("profile.json", "utf8"))
-client.on("message", message => {
-    if (message.author.bot || !message.guild) return; 
-    let score;
-    
-    if (message.guild) {
-      score = client.getScore.get(message.author.id, message.guild.id);
-      if (!score) {
-        score = { id: `${message.guild.id}-${message.author.id}`, user: message.author.id, guild: message.guild.id, points: 0, level: 1 };
-      }
-      score.points++;
-      const curLevel = Math.floor(0.1 * Math.sqrt(score.points));
-      client.setScore.run(score);
-    }
-    if (message.content.indexOf(prefix) !== 0) return;
-  
-    const args = message.content.slice(prefix.length).trim().split(/ +/g);
-    const command = args.shift().toLowerCase();
-  
-    if(command === "points") {
-      return message.reply(`You currently have ${score.points} points and are level ${score.level}!`);
-    }
-    
-    if(command === "give") {
-      if(!message.author.id === message.guild.owner) return message.reply("You're not the boss of me, you can't do that!");
-      const user = message.mentions.users.first() || client.users.get(args[0]);
-      if(!user) return message.reply("You must mention someone or give their ID!");
-      const pointsToAdd = parseInt(args[1], 10);
-      if(!pointsToAdd) return message.reply("You didn't tell me how many points to give...");
-          let userscore = client.getScore.get(user.id, message.guild.id);      
-      if (!userscore) {
-        userscore = { id: `${message.guild.id}-${user.id}`, user: user.id, guild: message.guild.id, points: 0, level: 1 };
-      }
-      userscore.points += pointsToAdd;
-      let userLevel = Math.floor(0.1 * Math.sqrt(score.points));
-      userscore.level = userLevel;
-      client.setScore.run(userscore);
-    
-      return message.channel.send(`${user.tag} has received ${pointsToAdd} points and now stands at ${userscore.points} points.`);
-    }
-    
-    if(command === "top") {
-      const top10 = sql.prepare("SELECT * FROM scores WHERE guild = ? ORDER BY points DESC LIMIT 10;").all(message.guild.id);
-      const embed = new Discord.RichEmbed()
-        .setTitle("**TOP 10 TEXT** :speech_balloon:")
-        .setAuthor('📋 Guild Score Leaderboards', message.guild.iconURL)
-        .setColor(0x00AE86);
-  
-      for(const data of top10) {
-        embed.addField(client.users.get(data.user).tag, `XP: \`${data.points}\` | LVL: \`${data.level}\``);
-      }
-      return message.channel.send({embed});
-    }
-    
-  });
+
 
 
 
 client.on('message', message => {
-    var prefix = "#";
   if (message.author.x5bz) return;
   if (!message.content.startsWith(prefix)) return;
- 
+
   let command = message.content.split(" ")[0];
   command = command.slice(prefix.length);
- 
+
   let args = message.content.split(" ").slice(1);
- 
+
   if (command == "ban") {
-               if(!message.channel.guild) return message.reply('** This command only for servers**');
+    if (!message.channel.guild) return;
          
   if(!message.guild.member(message.author).hasPermission("BAN_MEMBERS")) return message.reply("**You Don't Have ` BAN_MEMBERS ` Permission**");
   if(!message.guild.member(client.user).hasPermission("BAN_MEMBERS")) return message.reply("**I Don't Have ` BAN_MEMBERS ` Permission**");
   let user = message.mentions.users.first();
   let reason = message.content.split(" ").slice(2).join(" ");
   /*let b5bzlog = client.channels.find("name", "5bz-log");
- 
+
   if(!b5bzlog) return message.reply("I've detected that this server doesn't have a 5bz-log text channel.");*/
-  if (message.mentions.users.size < 1) return message.channel.send(`https://cdn.pg.sa/fjxlms81nk.png`);
-  if(!reason) return message.channel.send(`https://cdn.pg.sa/fjxlms81nk.png`);
+  if (message.mentions.users.size < 1) return message.reply("**Mention Someone**");
+  if(!reason) return;
   if (!message.guild.member(user)
-  .bannable) return message.reply(`This User Is Have High Role !`);
- 
+  .bannable) return message.reply("**This person has a grade higher than his bot rank**");
+
   message.guild.member(user).ban(7, user);
- 
-  const banembed = new Discord.RichEmbed()
-  .setAuthor(`BANNED!`, user.displayAvatarURL)
-  .setColor("RANDOM")
-  .setTimestamp()
-  .addField("**User:**",  '**[ ' + `${user.tag}` + ' ]**')
-  .addField("**By:**", '**[ ' + `${message.author.tag}` + ' ]**')
-  .addField("**Reason:**", '**[ ' + `${reason}` + ' ]**')
-  message.channel.send({
-    embed : banembed
-  })
-}
-});
+  message.channel.send(`**:white_check_mark: ${user} has been banned :airplane: **`)
+  let banEmbed = new Discord.RichEmbed()
+  .setAuthor(`New Banned User !`)
+  .setThumbnail(message.guild.iconURL || message.guild.avatarURL)
+  .addField('- Banned By: ',message.author.tag,true)
+  .addField('- Banned User:', `${user}`)
+  .addField('- Reason:',reason,true)
+  .addField('- Time & Date:', `${message.createdAt}`)
+  .setFooter(message.author.tag,message.author.avatarURL);
+  let incidentchannel = message.guild.channels.find(`name`, "incidents");
+if(!incidentchannel) return message.channel.send("Can't find incidents channel.");
+incidentchannel.send(banEmbed);
+user.send(`You Are Has Been Banned Permanently In ${message.guild.name} reason: ${reason}`)
+  }})
+
 client.on('message', message => {
 if(message.content.startsWith(prefix +"server")){
   if(!message.guild.member(message.author).hasPermission("ADMINISTRATOR")) return message.reply(`**هذه الخاصية للادارة فقط** :negative_squared_cross_mark: `)
@@ -701,10 +649,10 @@ var embed  = new Discord.RichEmbed()
 .addField("**🆔 Server ID:**", message.guild.id,true)
 .addField("**📅 Created On**", message.guild.createdAt.toLocaleString(),true)
 .addField("**👑 Owned by**",`${message.guild.owner.user.username}#${message.guild.owner.user.discriminator}`)
-.addField("👥 Members ",`[${message.guild.memberCount}]`,true)
+.addField("**👥 Members**",`[${message.guild.memberCount}]`,true)
 .addField('**💬 Channels **',`**${message.guild.channels.filter(m => m.type === 'text').size}**` + ' text | Voice  '+ `**${message.guild.channels.filter(m => m.type === 'voice').size}** `,true)
 .addField("**🌍 Others **" , message.guild.region,true)
-.addField("** 🔐 Roles **",`**[${message.guild.roles.size}]** Role `,true)
+.addField("**🔐 Roles **",`**[${message.guild.roles.size}]** Role `,true)
 .setColor('#000000')
 message.channel.sendEmbed(embed)
 
@@ -1036,7 +984,7 @@ client.on('message',message =>{
       .addField("Unmuted By", `<@${message.member.id}> with ID ${message.member.id}`)
       .addField("Unmuted In", message.channel)
       .addField("Time & Date", `${message.createdAt}`)
-      .setFooter("DragonBot 🐲")
+      .setFooter("Probot")
       let incidentchannel = message.guild.channels.find(`name`, "incidents");
       if(!incidentchannel) return message.channel.send("Can't find incidents channel.");
       
@@ -1063,41 +1011,48 @@ client.on("message", message => {
  message.channel.send({embed});
     }
 });
+
 client.on('message', message => {
-  if (message.author.x5bz) return;
-  if (!message.content.startsWith(prefix)) return;
-
-  let command = message.content.split(" ")[0];
-  command = command.slice(prefix.length);
-
-  let args = message.content.split(" ").slice(1);
-
-  if (command == "kick") {
-               if(!message.channel.guild) return message.reply('** This command only for servers**');
-         
-  if(!message.guild.member(message.author).hasPermission("KICK_MEMBERS")) return message.reply("**You Don't Have ` KICK_MEMBERS ` Permission**");
-  if(!message.guild.member(client.user).hasPermission("KICK_MEMBERS")) return message.reply("**I Don't Have ` KICK_MEMBERS ` Permission**");
-  let user = message.mentions.users.first();
-  let reason = message.content.split(" ").slice(2).join(" ");
-  if (message.mentions.users.size < 1) return message.reply("**https://cdn.discordapp.com/attachments/498625534549295114/498825358682882059/kick_metion.png**");
-  if(!reason) return message.reply ("**https://cdn.discordapp.com/attachments/498625534549295114/498825956983701514/kick_reson.png**");
-  if (!message.guild.member(user)
-  .kickable) return message.reply("**This User Is Have High Role**");
-
-  message.guild.member(user).kick();
-
-  const kickembed = new Discord.RichEmbed()
-  .setAuthor(`KICKED!`, user.displayAvatarURL)
-  .setColor("RANDOM")
-  .setTimestamp()
-  .addField("**User:**",  '**[ ' + `${user.tag}` + ' ]**')
-  .addField("**By:**", '**[ ' + `${message.author.tag}` + ' ]**')
-  .addField("**Reason:**", '**[ ' + `${reason}` + ' ]**')
-  message.channel.send({
-    embed : kickembed
-  })
-}
-});
+  var prefix = "#";
+    if (message.author.kick) return;
+    if (!message.content.startsWith(prefix)) return;
+  
+    let command = message.content.split(" ")[0];
+    command = command.slice(prefix.length);
+  
+    let args = message.content.split(" ").slice(1);
+  
+    if (command == "kick") {
+      if (!message.channel.guild) return;
+  
+    if(!message.guild.member(message.author).hasPermission("KICK_MEMBERS")) return message.reply("You Don't Have KICK_MEMBERS Permission").then(msg => msg.delete(5000));
+    if(!message.guild.member(client.user).hasPermission("KICK_MEMBERS")) return message.reply("I Don't Have KICK_Members Permission");
+    let user = message.mentions.users.first();
+    let reason = message.content.split(" ").slice(2).join(" ");
+  
+    if (message.mentions.users.size < 1) return message.reply("Mention Someone");
+    if(!reason) return message.reply ("Type The Reason Please");
+    if (!message.guild.member(user)
+    .bannable) return message.reply("I can not be higher than my rank");
+  
+    message.guild.member(user).kick(7, user);
+  
+    const Kickembed = new Discord.RichEmbed()
+    .setTitle('**New Kicked User !**')
+    .setThumbnail(message.guild.iconURL)
+    .setColor("RANDOM")
+    .addField("Kicked User:",  `${user.tag}`)
+    .addField("Kicked By:", `${message.author.tag}`)
+    .addField("Reason:", `${reason}`)
+    .addField("Kicked In :", `${message.channel.name}`)
+    .addField("Time & Date :", `${message.createdAt}`)
+    .setFooter('Probot');
+    message.guild.channels.find('name',  'incidents').sendEmbed(Kickembed)
+  message.channel.send(`**:white_check_mark: ${user} has been kicked ! :airplane:**`)
+  user.send(`**:airplane: You are has been kicked in ${message.guild.name} reason: ${reason}**`)
+      message.delete()
+  }
+  });
 client.on('message', message => {
          if(message.content === prefix + "closeroom") {
                              if(!message.channel.guild) return message.reply('** This command only for servers**');
