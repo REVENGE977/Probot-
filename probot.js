@@ -1206,6 +1206,8 @@ message.author.sendMessage(`
 - :musical_note: يحتوي على خاصيه ميوزك بجوده عاليه
 [❖═════════════════════════════❖]
 
+Currently, we are too lazy to translate our bot to English.
+
 الاوامر العامة
 
 #id معلومات عن حسابك الشخصي
