@@ -5,7 +5,7 @@ const dateFormat = require('dateformat');
 const client = new Discord.Client(); 
 const Canvas = require("canvas"); 
 const prefix = "#"
-onst id = JSON.parse(fs.readFileSync("./id/rank.json", "utf8"));
+const id = JSON.parse(fs.readFileSync("./id/rank.json", "utf8"));
 client.on("message", message => {
   if (message.author.bot) return;
 fs.writeFile('./id/rank.json', JSON.stringify(id), (err) => {
