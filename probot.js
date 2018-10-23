@@ -12,6 +12,7 @@ fs.writeFile('./id/rank.json', JSON.stringify(id), (err) => {
 if (err) console.error(err);
 });
 });
+
       client.on('message', message => {
           if(!id[message.author.id]) id[message.author.id] ={
               textrank: 1,
