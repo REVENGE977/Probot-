@@ -1327,6 +1327,8 @@ message.author.sendMessage(`
 
 #rep يعطي ريب
 
+#rank يطلع لك نقاطك
+
 #profile معلومات عامة مع الصورة
 
 أوامر ادارة السيرفرات 
