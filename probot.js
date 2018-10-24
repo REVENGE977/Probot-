@@ -993,7 +993,6 @@ client.on('message', async message => {
   command = command.slice(prefix.length);
   let args = message.content.split(" ");
   let messageArray = message.content.split(" ");
-  let reason = message.content.split(" ").slice(3).join(" ");
   let user = message.mentions.members.first();
   let time = messageArray[2];
     if(command === "tempmute") {
@@ -1047,7 +1046,7 @@ client.on('message', async message => {
     if(!time.match(/[1-60][s,m,h,d,w]/g)) return message.channel.send('**- Error in this duration maybe the bot not support this duration**');        message.delete(3500);
       message.delete(3500);
     })
-
+    let reason = message.content.split(" ").slice(3).join(" ");
     if(!reason) reason = " [ **Null** ] ";
 
     let thisEmbed = new Discord.RichEmbed()
