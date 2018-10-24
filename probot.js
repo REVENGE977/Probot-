@@ -764,17 +764,6 @@ client.on('message', message => {
 
   message.guild.member(user).ban(7, user);
   message.channel.send(`**:white_check_mark: ${user} has been banned :airplane: **`)
-  let banEmbed = new Discord.RichEmbed()
-  .setAuthor(`New Banned User !`)
-  .setThumbnail(message.guild.iconURL || message.guild.avatarURL)
-  .addField('- Banned By: ',message.author.tag,true)
-  .addField('- Banned User:', `${user}`)
-  .addField('- Reason:',reason,true)
-  .addField('- Time & Date:', `${message.createdAt}`)
-  .setFooter(message.author.tag,message.author.avatarURL);
-  let incidentchannel = message.guild.channels.find(`name`, "incidents");
-if(!incidentchannel) return message.channel.send("Can't find incidents channel.");
-incidentchannel.send(banEmbed);
 user.send(`You Are Has Been Banned Permanently In ${message.guild.name} reason: ${reason}`)
   }})
 
@@ -949,7 +938,7 @@ client.on('message', async message =>{
       if(!muterole){
         try{
           muterole = await message.guild.createRole({
-            name: "muted",
+            name: "Muted",
             color: "#000000",
             permissions:[]
           })
@@ -1007,17 +996,6 @@ client.on('message', async message =>{
           message.guild.member(mutePerson).addRole(muteRole);
           message.channel.send(`**:white_check_mark: ${mutePerson} has been muted ! :zipper_mouth: **`)
           message.delete()
-          let muteEmbed = new Discord.RichEmbed()
-          .setTitle(`New Muted User`)
-          .setThumbnail(message.guild.iconURL)
-          .addField('- Muted By:',message.author,true)
-          .addField('- Muted User:', `${mutePerson}`)
-          .addField('- Reason:',muteReason,true)
-          .addField('- Duration:',`${mmss(mmss(time), {long: true})}`)
-          .setFooter(message.author.username,message.author.avatarURL);
-          let incidentchannel = message.guild.channels.find(`name`, "incidents");
-          if(!incidentchannel) return message.channel.send("Can't find incidents channel.");
-          incidentchannel.sendEmbed(muteEmbed)
           mutePerson.send(`**You Are has been muted in ${message.guild.name} reason: ${muteReason}**`)
           .then(() => { setTimeout(() => {
              message.guild.member(mutePerson).removeRole(muteRole);
@@ -1039,18 +1017,6 @@ client.on('message',message =>{
             if(!Found) return message.channel.send(`:no_entry: | <@${message.author.id}> This preson not have any ban from this server! :unlock:`);
             message.guild.unban(args[1]);
             message.channel.send(`:white_check_mark: Successfully \`\`UNBANNED\`\` <@${args[1]}> From the server!`);
-           
-            let banInfo = new Discord.RichEmbed()
-            .setTitle('**New Unbanned User !**')
-            .setThumbnail(message.author.avatarURL)
-            .setColor('GREEN')
-            .setDescription(`**\n:airplane: Successfully \`\`UNBANNED\`\` <@${args[1]}> From the server!\n\n**User:** <@${args[1]}> (ID: ${args[1]})\n**By:** <@${message.author.id}> (ID: ${message.author.id})`)
-            .setTimestamp()
-            .setFooter(userM.user.tag, userM.user.avatarURL)
-           
-            let incidentchannel = message.guild.channels.find(`name`, "incidents");
-            if(!incidentchannel) return message.channel.send("Can't find incidents channel.");
-            incidentchannel.send(banEmbed);
             }
 
         )}
@@ -1072,18 +1038,6 @@ client.on('message',message =>{
            if(!time) return message.channel.send("**- اكتب الوقت**");
            if(!time.match(/[1-60][s,m,h,d,w]/g)) return message.channel.send('**- Error in this Duration**');
            if(!Reason) message.channel.send("**- اكتب Reason**");
-           let banEmbed = new Discord.RichEmbed()
-           .setAuthor(`New Banned User !`)
-           .setThumbnail(message.guild.iconURL || message.guild.avatarURL)
-           .addField('- Banned By: ',message.author.tag,true)
-           .addField('- Banned User:', `${User}`)
-           .addField('- Reason:',Reason,true)
-           .addField('- Time & Date:', `${message.createdAt}`)
-           .addField('- Duration:',time,true)
-           .setFooter(message.author.tag,message.author.avatarURL);
-           let incidentchannel = message.guild.channels.find(`name`, "incidents");
-      if(!incidentchannel) return message.channel.send("Can't find incidents channel.");
-      incidentchannel.send(banEmbed);
       message.channel.send(`**:white_check_mark: ${User} has been banned :airplane: **`).then(() => message.guild.member(User).ban({reason: Reason}))
       User.send(`**:airplane: You are has been banned in ${message.guild.name} reason: ${Reason} by: ${message.author.tag} :airplane:**`)
            .then(() => { setTimeout(() => {
@@ -1113,19 +1067,7 @@ client.on('message',message =>{
         if(!role || !kinggamer.roles.has(role.id)) return message.channel.sendMessage(`**:information_source:${mention.user.username} لقد تم فك الميوت عنه مسبقا**`)
       
         await kinggamer.removeRole(role) 
-        message.channel.sendMessage(`**:white_check_mark: ${mention.user.username}  Unmuted! **`);
-        let mutedEmbed = new Discord.RichEmbed()
-      .setDescription("New UnMute User")
-      .setThumbnail(message.guild.iconURL)
-      .setColor("#bc0000")
-      .addField("Unmuted", `${Warned} with ID ${Warned.id}`)
-      .addField("Unmuted By", `<@${message.member.id}> with ID ${message.member.id}`)
-      .addField("Unmuted In", message.channel)
-      .addField("Time & Date", `${message.createdAt}`)
-      .setFooter("Probot")
-      let incidentchannel = message.guild.channels.find(`name`, "incidents");
-      if(!incidentchannel) return message.channel.send("Can't find incidents channel.");
-      
+        message.channel.sendMessage(`**:white_check_mark: ${mention.user.username}  Unmuted! **`);      
         return;
       
         }
@@ -1174,20 +1116,8 @@ client.on('message', message => {
     .bannable) return message.reply("I can not be higher than my rank");
   
     message.guild.member(user).kick(7, user);
-  
-    const Kickembed = new Discord.RichEmbed()
-    .setTitle('**New Kicked User !**')
-    .setThumbnail(message.guild.iconURL)
-    .setColor("RANDOM")
-    .addField("Kicked User:",  `${user.tag}`)
-    .addField("Kicked By:", `${message.author.tag}`)
-    .addField("Reason:", `${reason}`)
-    .addField("Kicked In :", `${message.channel.name}`)
-    .addField("Time & Date :", `${message.createdAt}`)
-    .setFooter('Probot');
-    message.guild.channels.find('name',  'incidents').sendEmbed(Kickembed)
-  message.channel.send(`**:white_check_mark: ${user} has been kicked ! :airplane:**`)
-  user.send(`**:airplane: You are has been kicked in ${message.guild.name} reason: ${reason}**`)
+  message.channel.send(`**:white_check_mark: ${user} has been kicked ! **`)
+  user.send(`**You are has been kicked in ${message.guild.name} reason: ${reason}**`)
       message.delete()
   }
   });
@@ -1411,7 +1341,9 @@ if(message.content.startsWith(prefix  +  'warn'))  {
 .addField("**-  Time & Date:**",`[${message.createdAt}]`)
 .setFooter("Probot")
 .setColor('#060c37')
-message.guild.channels.find('name',  'incidents').sendEmbed(reportembed)
+let incidentchannel = message.guild.channels.find(`name`, "warns");
+if(!incidentchannel) return message.channel.send("Can't find warns channel.");
+incidentchannel.send(reportembed);
 message.reply(`**:warning: ${user} has been warned !:warning:**`).then(msg  =>  msg.delete(3000));
 user.send(`**:warning: You are has been warned in ${message.guild.name} reason: ${reason} :warning:**`)
 }
