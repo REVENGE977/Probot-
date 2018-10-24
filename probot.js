@@ -931,12 +931,14 @@ client.on('message', msg => {
 }
 });  const mmss = require('ms');
 client.on('message', async message => {
+  let command = msg.content.split(" ")[0];
+  command = command.slice(prefix.length);
   let args = message.content.split(" ");
   let messageArray = message.content.split(" ");
   let reason = message.content.split(" ").slice(3).join(" ");
   let user = message.mentions.members.first();
   let time = messageArray[2];
-  if(message.content.startsWith(prefix + "mute")) {
+    if(command === "mute") {
     
     if(!message.member.hasPermission("MUTE_MEMBERS")) return message.channel.send('You Dont Have Permissions').then(message => {
       message.delete(3500);
@@ -947,6 +949,11 @@ client.on('message', async message => {
       message.delete(3500);
       message.delete(3500);
     });
+
+    if(user === client.user) return message.channel.send('**You Cant Mute The Bot !**');
+    message.delete(3500);
+    message.delete(3500);
+  }
 
     if(!user) return  message.channel.send('Mention Someone').then(message => { 
       message.delete(3500);
@@ -981,7 +988,7 @@ client.on('message', async message => {
     if(!time) return message.channel.send("**- اكتب الوقت**");
     if(!time.match(/[1-60][s,m,h,d,w]/g)) return message.channel.send('**- Error in this duration maybe the bot not support this duration**');        message.delete(3500);
       message.delete(3500);
-    }
+    })
 
     if(!reason) reason = " [ **Null** ] ";
 
@@ -1030,7 +1037,7 @@ client.on('message', async message => {
       message.guild.member(mutePerson).removeRole(muteRole);
   }, mmss(time))
 })
-});
+
 client.on('message',message =>{
   var command = message.content.toLowerCase().split(" ")[0];
     var args = message.content.toLowerCase().split(" ");
