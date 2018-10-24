@@ -1015,6 +1015,7 @@ client.on('message', async message => {
     })
   
   if(user.hasPermission('ADMINISTRATOR')) return message.channel.send(`**:x: This Person A Staff I Cant Mute Him :/**`); 
+  let reason = message.content.split(" ").slice(3).join(" ");
 
     if(message.guild.member(user).roles.find('name', 'Muted')) return message.channel.send(`**:information_source: ${user.user.username} Already Muted**`);
 
@@ -1038,7 +1039,6 @@ client.on('message', async message => {
     if(!time.match(/[1-60][s,m,h,d,w]/g)) return message.channel.send('**- Error in this duration maybe the bot not support this duration**');        message.delete(3500);
       message.delete(3500);
     })
-    let reason = message.content.split(" ").slice(3).join(" ");
     if(!reason) reason = " [ **Null** ] ";
 
     let thisEmbed = new Discord.RichEmbed()
