@@ -1000,27 +1000,19 @@ client.on('message', async message => {
     if(!message.member.hasPermission("MUTE_MEMBERS")) return message.channel.send('You Dont Have Permissions').then(message => {
       message.delete(3500);
       message.delete(3500);
-    });
-
+    })
     if(!message.guild.member(client.user).hasPermission("MUTE_MEMBERS")) return message.channel.send('The Bot Dont Have MUTE_MEMBERS Permission').then(message => {
       message.delete(3500);
       message.delete(3500);
-    });
-
+    })
     if(user === client.user) return message.channel.send('**You Cant Mute The Bot !**');
     message.delete(3500);
     message.delete(3500);
   }
-
     if(!user) return  message.channel.send('Mention Someone').then(message => { 
       message.delete(3500);
       message.delete(3500);
-    });
-
-  if(user.id === message.author.id) return message.channel.send('**:x:You Cannot give mute to your self**').then(message => {
-      message.delete(3500);
-      message.delete(3500); 
-    });	
+    })
   
   if(user.hasPermission('ADMINISTRATOR')) return message.channel.send(`**:x: This Person A Staff I Cant Mute Him :/**`); 
 
@@ -1030,17 +1022,17 @@ client.on('message', async message => {
     if(user.position >= message.guild.member(message.author).positon) return message.channel.send('You Donot Have Permission **Muted_Members** ').then(message => {
       message.delete(3500);
       message.delete(3500);
-    });
+    })
   
     if(user.positon >= message.guild.member(client.user).positon) return message.channel.send('I Donot Have Permission **Muted_Members**').then(message => {
       message.delete(3500);
       message.delete(3500); 
-    });
+    })
     
     if(!time) message.channel.send(`**:hash: You Can Use ${prefix}mute @user Time Reason**`).then(message => {
       message.delete(3500);
       message.delete(3500);
-    });
+    })
 
     if(!time) return message.channel.send("**- اكتب الوقت**");
     if(!time.match(/[1-60][s,m,h,d,w]/g)) return message.channel.send('**- Error in this duration maybe the bot not support this duration**');        message.delete(3500);
@@ -1068,9 +1060,9 @@ client.on('message', async message => {
             SEND_MESSAGES: false, 
             READ_MESSAGES_HISTORY: false,
             ADD_REACTIONS: false
-          });
-        });
-      }); 
+          })
+        })
+      })
     } catch(e) {
       console.log(e.stack);
     }
@@ -1085,9 +1077,9 @@ client.on('message', async message => {
       .addField('- Duration:',time , true)
       .setFooter(message.author.username,message.author.avatarURL);
       let incidentchannel = message.guild.channels.find(`name`, "incidents");
-      if(!incidentchannel) return message.channel.send("Can't find incidents channel.");
+      if(!incidentchannel) return message.channel.send("Can't find incidents channel.")
       incidentchannel.sendEmbed(muteEmbed)
-      message.channel.send(`**:white_check_mark: ${user.user.username}  Muted! :zipper_mouth:  **  `);
+      message.channel.send(`**:white_check_mark: ${user.user.username}  Muted! :zipper_mouth:  **  `)
       user.setMute(true); 
     })
     .then(() => { setTimeout(() => {
