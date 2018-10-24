@@ -929,7 +929,65 @@ client.on('message', msg => {
         }    
     }
 }
-});  const mmss = require('ms');
+});
+client.on('message', async message =>{
+
+  if (message.author.omar) return;
+  if (!message.content.startsWith(prefix)) return;
+  if(!message.channel.guild) return message.channel.send('**This Command For Servers Only ! **').then(m => m.delete(5000));
+  if(!message.member.hasPermission('MANAGE_ROLES'));
+  if(!message.guild.member(client.user).hasPermission("MANAGE_ROLES")) return message.reply("**I Don't Have `MANAGE_ROLES` Permission**").then(msg => msg.delete(6000))
+  var command = message.content.split(" ")[0];
+  command = command.slice(prefix.length);
+  var args = message.content.split(" ").slice(1);
+    if(command == "mute") {
+      let tomute = message.guild.member(message.mentions.users.first() || message.guild.members.get(args[0]));
+      if(!tomute) return message.reply("**Mention Someone Please**:x: ") .then(m => m.delete(5000));
+      if(tomute.hasPermission("MANAGE_MESSAGES"))return      message.channel.send('**I Dont Have Permission** `MANAGE_MASSAGEES`');
+      let muterole = message.guild.roles.find(`name`, "muted");
+  
+      if(!muterole){
+        try{
+          muterole = await message.guild.createRole({
+            name: "muted",
+            color: "#000000",
+            permissions:[]
+          })
+          message.guild.channels.forEach(async (channel, id) => {
+            await channel.overwritePermissions(muterole, {
+              SEND_MESSAGES: false,
+              ADD_REACTIONS: false
+            });
+          });
+        }catch(e){
+          console.log(e.stack);
+        }
+      }
+      let mutetime = args[1];
+      if(!mutetime) return message.reply("**Please Type The Duration**:x:");
+  
+      await(tomute.addRole(muterole.id));
+      message.channel.send(`**<@${tomute.id}> Has been muted ! :white_check_mark:**`);
+        message.delete();
+      const muteembed = new Discord.RichEmbed()
+      .setTitle('**New Muted User !**')
+      .setColor("RANDOM")
+      .setTimestamp()
+      .addField("Muted User:",  `[ + ${user.tag} + ]`)
+      .addField("Muted By:", `[  + ${message.author.tag} +  ]`)
+      .addField("Reason:", `[ + ${reason} +  ]`)
+      .addField("Muted In :", `[${message.channel.name}]`)
+      .addField("Time & Date :", `[${message.createdAt}]`)
+      .setFooter("KingBot")
+      message.guild.channels.find('name',  'incidents').sendEmbed(muteembed)
+      setTimeout(function(){
+        tomute.removeRole(muterole.id);
+        message.channel.send(`<:white_check_mark: @${tomute.id}> **Has been unnmuted due to time lapse **:white_check_mark: `);
+      }, ms(mutetime));
+    }
+  });
+  
+const mmss = require('ms');
 client.on('message', async message => {
   let command = msg.content.split(" ")[0];
   command = command.slice(prefix.length);
@@ -938,7 +996,7 @@ client.on('message', async message => {
   let reason = message.content.split(" ").slice(3).join(" ");
   let user = message.mentions.members.first();
   let time = messageArray[2];
-    if(command === "mute") {
+    if(command === "tempmute") {
     
     if(!message.member.hasPermission("MUTE_MEMBERS")) return message.channel.send('You Dont Have Permissions').then(message => {
       message.delete(3500);
@@ -1077,7 +1135,7 @@ client.on('message',message =>{
         let Reason = message.content.split(" ").slice(3).join(" ");
         let messageArray = message.content.split(" ");
         let time = messageArray[2];
-        if(message.content.startsWith(prefix + "ban")) {
+        if(message.content.startsWith(prefix + "tempban")) {
            if(!message.guild.member(message.author).hasPermission("BAN_MEMBERS")) return message.channel.send("**You dont have ban_members permission :/ **");
            if(!User) message.channel.send("**Mention Someone**");
            if(User.id === client.user.id) return message.channel.send("**Why you want to ban me ? :/**");
