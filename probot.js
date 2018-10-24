@@ -4,17 +4,14 @@ const fs = require("fs");
 const dateFormat = require('dateformat');
 const client = new Discord.Client(); 
 const Canvas = require("canvas"); 
-const jimp = require('jimp')
 const prefix = "#"
-const id = JSON.parse(fs.readFileSync("./id/rank.json", "utf8"))
-	
+const id = JSON.parse(fs.readFileSync("./id/rank.json", "utf8"));
 client.on("message", message => {
   if (message.author.bot) return;
 fs.writeFile('./id/rank.json', JSON.stringify(id), (err) => {
 if (err) console.error(err);
 });
 });
-
       client.on('message', message => {
           if(!id[message.author.id]) id[message.author.id] ={
               textrank: 1,
@@ -909,130 +906,85 @@ client.on('ready', () => {
   console.log(`|        Probot Log By You !      |`);
   console.log(`|===================================|`);
 });
-client.on('message', msg => {
-  if (msg.author.bot) return;
-  if (!msg.content.startsWith(prefix)) return;
-  let command = msg.content.split(" ")[0];
-  command = command.slice(prefix.length);
-  let args = msg.content.split(" ").slice(1);
+		
+const hastebin = require('hastebin.js');
+var h = new hastebin({});
 
-    if(command === "clear") {
-        const emoji = client.emojis.find("name", "wastebasket")
-    let textxt = args.slice(0).join("");
-    if(msg.member.hasPermission("MANAGE_MESSAGES")) {
-    if (textxt == "") {
-        msg.delete().then
-    msg.channel.send("***```ضع عدد الرسائل التي تريد مسحها 👌```***").then(m => m.delete(3000));
-} else {
-    msg.delete().then
-    msg.delete().then
-    msg.channel.bulkDelete(textxt);
-        msg.channel.send("```php\nعدد الرسائل التي تم مسحها: " + textxt + "\n```").then(m => m.delete(3000));
-        }    
-    }
-}
-});  const mmss = require('ms');
-client.on('message', async message => {
-  let args = message.content.split(" ");
-  let messageArray = message.content.split(" ");
-  let reason = message.content.split(" ").slice(3).join(" ");
-  let user = message.mentions.members.first();
-  let time = messageArray[2];
-  if(message.content.startsWith(prefix + "mute")) {
-    
-    if(!message.member.hasPermission("MUTE_MEMBERS")) return message.channel.send('You Dont Have Permissions').then(message => {
-      message.delete(3500);
-      message.delete(3500);
-    });
-
-    if(!message.guild.member(client.user).hasPermission("MUTE_MEMBERS")) return message.channel.send('The Bot Dont Have MUTE_MEMBERS Permission').then(message => {
-      message.delete(3500);
-      message.delete(3500);
-    });
-
-    if(!user) return  message.channel.send('Mention Someone').then(message => { 
-      message.delete(3500);
-      message.delete(3500);
-    });
-
-  if(user.id === message.author.id) return message.channel.send('**:x:You Cannot give mute to your self**').then(message => {
-      message.delete(3500);
-      message.delete(3500); 
-    });	
-  
-  if(user.hasPermission('ADMINISTRATOR')) return message.channel.send(`**:x: This Person A Staff I Cant Mute Him :/**`); 
-
-    if(message.guild.member(user).roles.find('name', 'Muted')) return message.channel.send(`**:information_source: ${user.user.username} Already Muted**`);
-
-  
-    if(user.position >= message.guild.member(message.author).positon) return message.channel.send('You Donot Have Permission **Muted_Members** ').then(message => {
-      message.delete(3500);
-      message.delete(3500);
-    });
-  
-    if(user.positon >= message.guild.member(client.user).positon) return message.channel.send('I Donot Have Permission **Muted_Members**').then(message => {
-      message.delete(3500);
-      message.delete(3500); 
-    });
-    
-    if(!time) message.channel.send(`**:hash: You Can Use ${prefix}mute @user Time Reason**`).then(message => {
-      message.delete(3500);
-      message.delete(3500);
-    });
-
-    if(!time) return message.channel.send("**- اكتب الوقت**");
-    if(!time.match(/[1-60][s,m,h,d,w]/g)) return message.channel.send('**- Error in this duration maybe the bot not support this duration**');        message.delete(3500);
-      message.delete(3500);
-    }
-
-    if(!reason) reason = " [ **Null** ] ";
-
-    let thisEmbed = new Discord.RichEmbed()
-    .setTitle('**You Are Has Been Muted**')
-    .setThumbnail(message.guild.iconURL)
-    .addField('- Server:',message.guild.name, true) 
-    .addField('- Muted By:',`${message.author}`)
-    .addField('- Muted User:', `${user}`)
-    .addField('- Reason:', `${reason}`)
-    .addField('- Duration:', `${time}`)
-    let role = message.guild.roles.find('name', 'Muted') || message.guild.roles.get(r => r.name === 'Muted');
-    if(!role) try {
-      message.guild.createRole({
-        name: "Muted",
-        permissions: 0 
-      }).then(r => {
-        message.guild.channels.forEach(c => {
-          c.overwritePermissions(r , {
-            SEND_MESSAGES: false, 
-            READ_MESSAGES_HISTORY: false,
-            ADD_REACTIONS: false
-          });
+client.on('message', message => {
+  if (!message.content.startsWith(prefix)) return;
+  var args = message.content.split(' ');
+  var command = args[0];
+  switch(command) {
+    case "k#prune":
+    if (message.channel.type !== "text") return message.reply("** This Command is Only For Servers | :x: **");
+    if (!message.member.hasPermission("MANAGE_MESSAGES")) return message.reply("** You Don't Have Access To Do This Command | :x: **");
+    if (!args[1]) args[1] = 100;
+    var count = parseInt(args[1]);
+    if (isNaN(count)) return message.reply("** You Have To Type Number | :x: **");
+    message.channel.bulkDelete(count).then(msgs => {
+      message.channel.send("```php\nعدد الرسائل التي تم مسحها: " + msgs.size + "\n```").then(m => m.delete(3000));
+      var x = 0;
+      var messages = msgs.map(m => `${++x} - ${m.author.tag}  :  ${m.content.split(" ").join(" ")}`).join(`
+`);
+      fs.writeFile(`${message.guild.id}.txt`, messages, (err) => {
+        if (err) console.log(err.message);
+        h.post(messages).then(url => {
+          var c = message.guild.channels.find("name", "log");
+          if (!c) return;
+          var embed = new Discord.RichEmbed()
+          .setTitle(`Bulk Delete. | ${msgs.size} Messages`)
+          .setAuthor(client.user.tag, client.user.avatarURL)
+          .setThumbnail(message.guild.iconURL)
+          .setColor("RANDOM")
+          .setDescription(`By \`${message.author.tag}\`\n\n In #${message.channel.name}\n\n [Vew Messages on : \`HasteBin\`](${url})`)
+          .attachFile(`./${message.guild.id}.txt`);
+          c.send(`Download Messages : `, {embed : embed});
         });
-      }); 
-    } catch(e) {
-      console.log(e.stack);
-    }
-    user.addRole(role).then(() => {
-      user.send(thisEmbed);
-      let muteEmbed = new Discord.RichEmbed()
-      .setTitle(`New Muted User`)
-      .setThumbnail(message.guild.iconURL)
-      .addField('- Muted By:',message.author , true)
-      .addField('- Muted User:', `${user}`)
-      .addField('- Reason:',reason , true)
-      .addField('- Duration:',time , true)
-      .setFooter(message.author.username,message.author.avatarURL);
-      let incidentchannel = message.guild.channels.find(`name`, "incidents");
-      if(!incidentchannel) return message.channel.send("Can't find incidents channel.");
-      incidentchannel.sendEmbed(muteEmbed)
-      message.channel.send(`**:white_check_mark: ${user.user.username}  Muted! :zipper_mouth:  **  `);
-      user.setMute(true); 
-    })
-    .then(() => { setTimeout(() => {
-      message.guild.member(mutePerson).removeRole(muteRole);
-  }, mmss(time))
-})
+      });
+    });
+    break;
+  };
 });
+
+const mmss = require('ms');
+client.on('message', async message => {
+    let muteReason = message.content.split(" ").slice(3).join(" ");
+    let mutePerson = message.mentions.users.first();
+    let messageArray = message.content.split(" ");
+    let muteRole = message.guild.roles.find("name", "Muted");
+    let time = messageArray[2];
+    if(message.content.startsWith(prefix + "tempmute")) {
+        if(!message.member.hasPermission('MUTE_MEMBERS')) return message.channel.send('**للأسف لا تمتلك صلاحية** `MUTE_MEMBERS`' );
+        if(!mutePerson) return message.channel.send("**- منشن الشخص يلي تبي تعطيه الميوت**");
+        if(mutePerson === message.author) return message.channel.send('**- ماتقدر تعطي نفسك ميوت**');
+        if(mutePerson === client.user) return message.channel.send('**- ماتقدر تعطي البوت ميوت :)**');
+        if(message.guild.member(mutePerson).roles.has(muteRole.id)) return message.channel.send('**- هذا الشخص ميوتد بالفعل**');
+        if(!muteRole) return message.guild.createRole({ name: "Muted", permissions: [] });
+        if(!time) return message.channel.send("**- اكتب الوقت**");
+        if(!time.match(/[1-60][s,m,h,d,w]/g)) return message.channel.send('**- Error in this duration maybe the bot not support this duration**');
+        if(!muteReason) return message.channel.send("**- اكتب السبب**");
+        message.guild.member(mutePerson).addRole(muteRole);
+        message.channel.send(`**:white_check_mark: ${mutePerson} has been muted ! :zipper_mouth: **`)
+        message.delete()
+        let muteEmbed = new Discord.RichEmbed()
+        .setTitle(`New Muted User`)
+        .setThumbnail(message.guild.iconURL)
+        .addField('- Muted By:',message.author,true)
+        .addField('- Muted User:', `${mutePerson}`)
+        .addField('- Reason:',muteReason,true)
+        .addField('- Duration:',`${mmss(mmss(time), {long: true})}`)
+        .setFooter(message.author.username,message.author.avatarURL);
+        let incidentchannel = message.guild.channels.find(`name`, "incidents");
+        if(!incidentchannel) return message.channel.send("Can't find incidents channel.");
+        incidentchannel.sendEmbed(muteEmbed)
+        mutePerson.send(`**You Are has been muted in ${message.guild.name} reason: ${muteReason}**`)
+        .then(() => { setTimeout(() => {
+           message.guild.member(mutePerson).removeRole(muteRole);
+       }, mmss(time));
+    });
+    }
+});
+
 client.on('message',message =>{
   var command = message.content.toLowerCase().split(" ")[0];
     var args = message.content.toLowerCase().split(" ");
