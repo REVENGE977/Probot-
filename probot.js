@@ -1147,9 +1147,9 @@ client.on('message', async message =>{
   var args = message.content.split(" ").slice(1);
     if(command == "mute") {
       let tomute = message.guild.member(message.mentions.users.first() || message.guild.members.get(args[0]));
-      if(!tomute) return message.reply("**Mention Someone Please**:x: ") .then(m => m.delete(5000));
+      if(!tomute) return message.reply(":information_source: `#mute @OrochiX` يجب تحديد شخص ") .then(m => m.delete(5000));
       if(tomute.hasPermission("MANAGE_MESSAGES"))return      message.channel.send('**I Dont Have Permission** `MANAGE_MASSAGEES`');
-      let muterole = message.guild.roles.find(`name`, "muted");
+      let muterole = message.guild.roles.find(`name`, "Muted");
   
       if(!muterole){
         try{
@@ -1168,32 +1168,18 @@ client.on('message', async message =>{
           console.log(e.stack);
         }
       }
-      let mutetime = args[1];
-      if(!mutetime) return message.reply("**Please Type The Duration**:x:");
-  
+
       await(tomute.addRole(muterole.id));
       message.channel.send(`**<@${tomute.id}> Has been muted ! :white_check_mark:**`);
         message.delete();
-      const muteembed = new Discord.RichEmbed()
-      .setTitle('**New Muted User !**')
-      .setColor("RANDOM")
-      .setTimestamp()
-      .addField("Muted User:",  `[ + ${user.tag} + ]`)
-      .addField("Muted By:", `[  + ${message.author.tag} +  ]`)
-      .addField("Reason:", `[ + ${reason} +  ]`)
-      .addField("Muted In :", `[${message.channel.name}]`)
-      .addField("Time & Date :", `[${message.createdAt}]`)
-      .setFooter("KingBot")
-      message.guild.channels.find('name',  'incidents').sendEmbed(muteembed)
-      setTimeout(function(){
-        tomute.removeRole(muterole.id);
-        message.channel.send(`<:white_check_mark: @${tomute.id}> **Has been unnmuted due to time lapse **:white_check_mark: `);
-      }, ms(mutetime));
+
     }
   });
   
   const mmss = require('ms');
   client.on('message', async message => {
+    let muteembed = new Discord.RichEmbed()
+    .setImage('https://c.top4top.net/p_1029o1te41.png')
       let muteReason = message.content.split(" ").slice(3).join(" ");
       let mutePerson = message.mentions.users.first();
       let messageArray = message.content.split(" ");
@@ -1201,7 +1187,7 @@ client.on('message', async message =>{
       let time = messageArray[2];
       if(message.content.startsWith(prefix + "tempmute")) {
           if(!message.member.hasPermission('MUTE_MEMBERS')) return message.channel.send('**للأسف لا تمتلك صلاحية** `MUTE_MEMBERS`' );
-          if(!mutePerson) return message.channel.send("**- منشن الشخص يلي تبي تعطيه الميوت**");
+          if(!mutePerson) return message.channel.sendEmbed(muteembed)
           if(mutePerson === message.author) return message.channel.send('**- ماتقدر تعطي نفسك ميوت**');
           if(mutePerson === client.user) return message.channel.send('**- ماتقدر تعطي البوت ميوت :)**');
           if(message.guild.member(mutePerson).roles.has(muteRole.id)) return message.channel.send('**- هذا الشخص ميوتد بالفعل**');
@@ -1219,6 +1205,7 @@ client.on('message', async message =>{
       });
       }
   });
+
 client.on('message',message =>{
   var command = message.content.toLowerCase().split(" ")[0];
     var args = message.content.toLowerCase().split(" ");
@@ -1226,7 +1213,7 @@ client.on('message',message =>{
     if(command == prefix + 'unban') {
         if(!message.member.hasPermission('BAN_MEMBERS')) return message.channel.send(':no_entry: | You dont have **BAN_MEMBERS** Permission!');
         if(!message.guild.member(client.user).hasPermission("BAN_MEMBERS")) return message.channel.send(':no_entry: | I dont have **BAN_MEMBERS** Permission!');
-        if(!args[1]) return  message.channel.send(':no_entry: | Please type the ID of user');
+        if(!args[1]) return  message.channel.send(':information_source:  `#kick <@id>` يجب تحديد شخص');
         if(args[1].length < 16) return message.reply(':no_entry: | This ID is not id user!');
         message.guild.fetchBans().then(bans => {
             var Found = bans.find(m => m.id === args[1]);
@@ -1239,6 +1226,8 @@ client.on('message',message =>{
       })
 
       client.on('message', async message => {
+        let banembed = new Discord.RichEmbed()
+        .setImage('https://e.top4top.net/p_1029oot2o1.png')
         var moment = require('moment');
         var mmss = require('ms')
         let date = moment().format('Do MMMM YYYY , hh:mm');
@@ -1248,7 +1237,7 @@ client.on('message',message =>{
         let time = messageArray[2];
         if(message.content.startsWith(prefix + "tempban")) {
            if(!message.guild.member(message.author).hasPermission("BAN_MEMBERS")) return message.channel.send("**You dont have ban_members permission :/ **");
-           if(!User) message.channel.send("**Mention Someone**");
+           if(!User) return message.channel.sendEmbed(banembed)
            if(User.id === client.user.id) return message.channel.send("**Why you want to ban me ? :/**");
            if(User.id === message.guild.owner.id) return message.channel.send("**Nice try man :> you cant ban the ownership**");
            if(!time) return message.channel.send("**- اكتب الوقت**");
@@ -1273,7 +1262,7 @@ client.on('message',message =>{
       if(!message.guild.member(client.user).hasPermission("MUTE_MEMBERS")) return message.reply("**I donot Have Permission Mute_Members**").then(msg => msg.delete(6000))
       
         let kinggamer = message.guild.member(message.mentions.users.first()) || message.guild.members.get(args[0]);
-           if(!kinggamer) return message.channel.send('').then(msg => {
+           if(!kinggamer) return message.channel.send(':information_source:  `#kick @OrochiX` يجب تحديد شخص ').then(msg => {
             msg.delete(3500);
             message.delete(3500); 
           });
@@ -1326,7 +1315,7 @@ client.on('message', message => {
     let user = message.mentions.users.first();
     let reason = message.content.split(" ").slice(2).join(" ");
   
-    if (message.mentions.users.size < 1) return message.reply("Mention Someone");
+    if (message.mentions.users.size < 1) return message.reply(":information_source: `#kick @OrochiX` يجب تحديد شخص ");
     if(!reason) return message.reply ("Type The Reason Please");
     if (!message.guild.member(user)
     .bannable) return message.reply("I can not be higher than my rank");
@@ -1546,12 +1535,12 @@ client.on('message',  async  message  =>  {
 if(message.content.startsWith(prefix  +  'warn'))  {
   message.delete();
   if(!message.member.hasPermission('MUTE_MEMBERS')) return      message.channel.send('**للأسف لا تمتلك صلاحيات' );
-  if(!user)  return  message.channel.send("**  -  mention  a  member  **")//by  orochix
-  if(!reason)  return  message.channel.send("**  -  Type  Reason  **")//by  orochix
+  if(!user)  return  message.channel.send("**  -  mention  a  member  **")//by  OrochiX
+  if(!reason)  return  message.channel.send("**  -  Type  Reason  **")//by  OrochiX
   let  reportembed  =  new  Discord.RichEmbed()
   .setTitle(`**New  Warned User !**`)
-.addField("**-  Warned  User:**",  `[${user}  with  ID  ${user.id}]`)//by  orochix
-.addField('**-  Warned  By:**',`[${message.author.tag} with id ${message.author.id}]`)//by  orochix
+.addField("**-  Warned  User:**",  `[${user}  with  ID  ${user.id}]`)//by  OrochiX
+.addField('**-  Warned  By:**',`[${message.author.tag} with id ${message.author.id}]`)//by  OrochiX
 .addField('**-  Reason:**',  `[${reason}]`,  true)
 .addField("**-  Warned  in:**",`[${message.channel.name}]`)
 .addField("**-  Time & Date:**",`[${message.createdAt}]`)
@@ -1564,7 +1553,7 @@ message.reply(`**:warning: ${user} has been warned !:warning:**`).then(msg  =>  
 user.send(`**:warning: You are has been warned in ${message.guild.name} reason: ${reason} :warning:**`)
 }
 
-//coding  by  orochix  !
+//coding  by  OrochiX  !
 
 })
 
