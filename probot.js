@@ -3055,7 +3055,7 @@ client.on("guildMemberAdd", member => {
 }).catch(console.error)
 })
 
-    const devs = ['562273167427764234', '505638480248963072'];
+    const devs = ['ايديك'];
 
 client.on('message', message => {
     let argresult = message.content.split(` `).slice(1).join(' ');
